@@ -78,6 +78,8 @@ const Form = ({ currentId, setCurrentId }) => {
 					variant="outlined"
 					label="Message"
 					fullWidth
+					multiline
+					rows={3}
 					value={postData.message}
 					// how to update only 1 property in a state that is an object
 					onChange={(e) =>

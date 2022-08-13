@@ -5,6 +5,7 @@ import memories from '../../images/memories.png';
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { LOGOUT } from '../../constants/actionTypes';
+import decode from 'jwt-decode';
 
 export default function Navbar() {
   const classes = useStyles();
@@ -23,8 +24,17 @@ export default function Navbar() {
     /*
       check wtf is going on here
     */
-    const token = user?.sub;
+    const token = user?.token;
+    
+    // if token expired
+    if (token) {
+      const decodedToken = decode(token);
+      
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+    
     setUser(JSON.parse(localStorage.getItem('profile')));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
   
   return (

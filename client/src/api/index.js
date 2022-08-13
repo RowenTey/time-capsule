@@ -3,7 +3,8 @@ import axios from 'axios';
 const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 API.interceptors.request.use((req) => {
-  const { token } = JSON.parse(localStorage.getItem('profile'));
+  const user = JSON.parse(localStorage.getItem('profile'));
+  const token = user?.token;
   console.log("Token for request headers " + token);
   if (token) {
     req.headers.Authorization = `Bearer ${token}`;

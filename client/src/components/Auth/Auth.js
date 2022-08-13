@@ -51,8 +51,10 @@ export default function Auth() {
 	};
   
   const googleSuccess = async (res) => {
+		// console.log(res);
 		const result = await fetchGoogleResponse(res);
-		const token = res.credentials;
+		const token = res.credential;
+		// const { sub: token } = result;
 		console.log('Result', result);
 		
 		try {
@@ -123,17 +125,19 @@ export default function Auth() {
 						>
 							{isSignUp ? "Sign Up" : "Sign In"}
 						</Button>
-						<Grid container justifyContent="center" className={classes.googleButton}>
-							<Grid item>
-								<GoogleLogin
-									clientId="790180615424-vj0onnbe5rshfijrirdck31qclkcef2u.apps.googleusercontent.com"
-									onSuccess={googleSuccess}
-									onError={googleError}
-									width="300"
-									size="large"
-								/>
+						{!isSignUp && (
+							<Grid container justifyContent="center" className={classes.googleButton}>
+								<Grid item>
+									<GoogleLogin
+										clientId="790180615424-vj0onnbe5rshfijrirdck31qclkcef2u.apps.googleusercontent.com"
+										onSuccess={googleSuccess}
+										onError={googleError}
+										width="300"
+										size="large"
+									/>
+								</Grid>
 							</Grid>
-						</Grid>
+						)}
 						<Grid container justifyContent="flex-end">
 							<Grid item>
 								<Button onClick={switchMode}>
