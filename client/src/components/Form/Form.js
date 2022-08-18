@@ -3,67 +3,75 @@ import React, { useState, useEffect } from "react";
 import useStyles from "./styles";
 import FileBase from "react-file-base64";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import { useDispatch, useSelector } from 'react-redux';
-import { createPost, updatePost } from '../../actions/posts'
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/posts";
 
 const Form = ({ currentId, setCurrentId }) => {
 	const [postData, setPostData] = useState({
 		title: "",
 		message: "",
-		tags: "",
+		tags: [""],
 		selectedFile: "",
 	});
-	const user = JSON.parse(localStorage.getItem('profile'));
-	
+	const user = JSON.parse(localStorage.getItem("profile"));
+
 	// finding the old post (not updated yet) stored in Redux's store
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+	const post = useSelector((state) => {
+		const { posts } = state.posts;
+
+		return currentId ? posts.find((p) => p._id === currentId) : null;
+	});
 	const classes = useStyles();
-  const dispatch = useDispatch();
-	
-	useEffect(() =>  {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
 		if (post) setPostData(post);
-	}, [post])
-	
+	}, [post]);
+
 	const handleSubmit = (e) => {
-    e.preventDefault();
-		
+		e.preventDefault();
+
 		if (currentId) {
-			dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+			dispatch(
+				updatePost(currentId, { ...postData, name: user?.result?.name })
+			);
 		} else {
 			dispatch(createPost({ ...postData, name: user?.result?.name }));
 		}
 		clear();
-  };
-  
+	};
+
 	const clear = () => {
 		setCurrentId(null);
 		setPostData({
 			title: "",
 			message: "",
-			tags: "",
+			tags: [""],
 			selectedFile: "",
-		})
+		});
 	};
-	
+
 	if (!user?.result?.name) {
 		return (
 			<Paper className={classes.paper}>
 				<Typography variant="h6" align="center">
 					Please Sign In to create your own memories and like other's memories
-				</Typography>	
+				</Typography>
 			</Paper>
-		)
+		);
 	}
 
 	return (
-		<Paper className={classes.paper}>
+		<Paper className={classes.paper} elevation={6}>
 			<form
 				autoComplete="off"
 				noValidate
 				className={`${classes.root} ${classes.form}`}
 				onSubmit={handleSubmit}
 			>
-				<Typography variant="h6">{currentId ? 'Editing' : 'Creating'} a Memory</Typography>
+				<Typography variant="h6">
+					{currentId ? "Editing" : "Creating"} a Memory
+				</Typography>
 				<TextField
 					name="title"
 					variant="outlined"
@@ -79,7 +87,7 @@ const Form = ({ currentId, setCurrentId }) => {
 					label="Message"
 					fullWidth
 					multiline
-					rows={3}
+					minRows={3}
 					value={postData.message}
 					// how to update only 1 property in a state that is an object
 					onChange={(e) =>
@@ -91,9 +99,11 @@ const Form = ({ currentId, setCurrentId }) => {
 					variant="outlined"
 					label="Tags"
 					fullWidth
-					value={postData.tags}
+					value={postData.tags.join(", ")}
 					// how to update only 1 property in a state that is an object
-					onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(', ') })}
+					onChange={(e) =>
+						setPostData({ ...postData, tags: e.target.value.split(", ") })
+					}
 				/>
 				<div className={classes.fileInput}>
 					<FileBase
