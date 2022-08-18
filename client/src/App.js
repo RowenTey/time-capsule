@@ -9,6 +9,7 @@ import Auth from "./components/Auth/Auth";
 
 const App = () => {
 	const user = JSON.parse(localStorage.getItem("profile"));
+	console.log(process.env);
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>

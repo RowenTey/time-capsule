@@ -8,6 +8,7 @@ scripts/flow/*/.flowconfig
 _SpecRunner.html
 __benchmarks__
 build/
+.netlify/
 remote-repo/
 coverage/
 .module-cache
