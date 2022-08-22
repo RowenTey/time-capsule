@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
-import memoriesLogo from "../../images/memoriesLogo.png";
-import memoriesText from "../../images/memoriesText.png";
+import TimeCapsuleLogo from "../../images/TimeCapsuleLogo.png";
+import TimeCapsule from "../../images/TimeCapsule.png";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../constants/actionTypes";
@@ -41,12 +41,12 @@ const Navbar = () => {
 	return (
 		<AppBar className={classes.appBar} position="static" color="inherit">
 			<Link to="/" className={classes.brandContainer}>
-				<img src={memoriesText} alt="icon" height="45px" />
+				<img src={TimeCapsule} alt="icon" height="45px" />
 				<img
 					className={classes.image}
-					src={memoriesLogo}
+					src={TimeCapsuleLogo}
 					alt="icon"
-					height="40px"
+					height="50px"
 				/>
 			</Link>
 			<Toolbar className={classes.toolbar}>

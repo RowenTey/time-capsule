@@ -1,14 +1,10 @@
 import React, { useRef, useState } from "react";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
 import {
-	Paper,
 	Typography,
-	Divider,
-	CircularProgress,
 	TextField,
-	Button,
+	Button
 } from "@material-ui/core";
 import { commentPost } from "../../actions/posts";
 

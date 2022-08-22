@@ -138,7 +138,7 @@ const Auth = () => {
 							>
 								<Grid item>
 									<GoogleLogin
-										clientId="790180615424-vj0onnbe5rshfijrirdck31qclkcef2u.apps.googleusercontent.com"
+										clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
 										onSuccess={googleSuccess}
 										onError={googleError}
 										width="300"
