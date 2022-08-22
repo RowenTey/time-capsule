@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
-import memoriesLogo from "../../images/memoriesLogo.png";
+import TimeCapsuleLogo from "../../images/TimeCapsuleLogo.png";
 import TimeCapsule from "../../images/TimeCapsule.png";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
@@ -44,9 +44,9 @@ const Navbar = () => {
 				<img src={TimeCapsule} alt="icon" height="45px" />
 				<img
 					className={classes.image}
-					src={memoriesLogo}
+					src={TimeCapsuleLogo}
 					alt="icon"
-					height="40px"
+					height="50px"
 				/>
 			</Link>
 			<Toolbar className={classes.toolbar}>
