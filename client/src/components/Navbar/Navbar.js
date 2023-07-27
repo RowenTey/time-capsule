@@ -22,9 +22,6 @@ const Navbar = () => {
 	};
 
 	useEffect(() => {
-		/*
-      check wtf is going on here
-    */
 		const token = user?.token;
 
 		// if token expired

@@ -23,7 +23,7 @@ const PostDetails = () => {
 		dispatch(getPost(id));
 	}, [dispatch, id]);
 
-	// this will populate the posts variable
+	/* this will populate the posts variable */
 	useEffect(() => {
 		if (post)
 			dispatch(getPostsBySearch({ search: null, tags: post?.tags.join(",") }));
@@ -39,9 +39,9 @@ const PostDetails = () => {
 		);
 	}
 
-	// remove the post with same _id as current one
+	/* remove the post with same _id as current one */
 	const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-
+	
 	const openPost = (id) => history.push(`/posts/${id}`);
 
 	return (

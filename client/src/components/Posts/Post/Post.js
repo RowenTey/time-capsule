@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { deletePost, likePost } from "../../../actions/posts";
 
-// destructure post from props
+/* destructure post from props */
 const Post = ({ post, setCurrentId }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();

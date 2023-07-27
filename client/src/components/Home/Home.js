@@ -34,7 +34,7 @@ const Home = () => {
 	const [tags, setTags] = useState([]);
 
 	const handleKeyPress = (event) => {
-		// if user presses enter
+		/* if user presses enter */
 		if (event.charCode === 13) {
 			// search post
 			searchPost();
@@ -42,16 +42,17 @@ const Home = () => {
 	};
 
 	// to update state if array
-	const handleAdd = (tag) => setTags([...tags, tag]);
+	const handleAdd = (tag) => setTags(tags => [...tags, tag]);
 
 	// to update state if array
 	const handleDelete = (tagToDelete) =>
-		setTags(tags.filter((t) => t !== tagToDelete));
+		setTags(tags => tags.filter((t) => t !== tagToDelete));
 
 	const searchPost = () => {
 		if (search.trim() || tags.length) {
 			console.log(search.trim(), tags);
-			dispatch(getPostsBySearch({ search, tags: tags.join(",") })); // cannot pass array so join to form string
+			/* cannot pass array so join to form string */
+			dispatch(getPostsBySearch({ search, tags: tags.join(",") })); 
 			history.push(
 				`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
 			);

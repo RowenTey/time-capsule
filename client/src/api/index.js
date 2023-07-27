@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-	baseURL: "https://time-capsule-mern.herokuapp.com/",
+	baseURL: process.env.NODE_ENV === 'development' ? "http://localhost:5000" : "https://time-capsule-mern.herokuapp.com/",
 });
 
 API.interceptors.request.use((req) => {
