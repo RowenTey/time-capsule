@@ -17,9 +17,7 @@ app.use("/user", userRoutes);
 app.get("/", (req, res) => {
 	res.send("APP IS RUNNING!");
 });
-const PORT = process.env.PORT || 5000;
-
-console.log(process.env.CONNECTION_URL);
+const PORT = process.env.PORT || 8080;
 
 mongoose
 	.connect(process.env.CONNECTION_URL, {
