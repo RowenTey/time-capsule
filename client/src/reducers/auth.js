@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { AUTH, LOGOUT } from "../constants/actionTypes";
 
 export default (state = { authData: null }, action) => {
