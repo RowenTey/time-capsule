@@ -15,7 +15,7 @@ const Form = ({ currentId, setCurrentId }) => {
 	});
 	const user = JSON.parse(localStorage.getItem("profile"));
 
-	// finding the old post (not updated yet) stored in Redux's store
+	/* finding the old post (not updated yet) stored in Redux's store */
 	const post = useSelector((state) => {
 		const { posts } = state.posts;
 
@@ -25,7 +25,7 @@ const Form = ({ currentId, setCurrentId }) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (post) setPostData(post);
+		if (post) setPostData(() => post);
 	}, [post]);
 
 	const handleSubmit = (e) => {
@@ -43,19 +43,19 @@ const Form = ({ currentId, setCurrentId }) => {
 
 	const clear = () => {
 		setCurrentId(null);
-		setPostData({
+		setPostData(() => ({
 			title: "",
 			message: "",
 			tags: [""],
 			selectedFile: "",
-		});
+		}));
 	};
 
 	if (!user?.result?.name) {
 		return (
 			<Paper className={classes.paper}>
 				<Typography variant="h6" align="center">
-					Please Sign In to create your own memories and like other's memories
+					Please sign in to create your own memories and like other's memories
 				</Typography>
 			</Paper>
 		);
@@ -78,8 +78,8 @@ const Form = ({ currentId, setCurrentId }) => {
 					label="Title"
 					fullWidth
 					value={postData.title}
-					// how to update only 1 property in a state that is an object
-					onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+					/* how to update only 1 property in a state that is an object */
+					onChange={(e) => setPostData(oldPostData => ({ ...oldPostData , title: e.target.value }))}
 				/>
 				<TextField
 					name="message"
@@ -89,9 +89,9 @@ const Form = ({ currentId, setCurrentId }) => {
 					multiline
 					minRows={3}
 					value={postData.message}
-					// how to update only 1 property in a state that is an object
+					/* how to update only 1 property in a state that is an object */
 					onChange={(e) =>
-						setPostData({ ...postData, message: e.target.value })
+						setPostData(oldPostData => ({ ...oldPostData, message: e.target.value }))
 					}
 				/>
 				<TextField
@@ -100,9 +100,9 @@ const Form = ({ currentId, setCurrentId }) => {
 					label="Tags"
 					fullWidth
 					value={postData.tags.join(", ")}
-					// how to update only 1 property in a state that is an object
+					/* how to update only 1 property in a state that is an object */
 					onChange={(e) =>
-						setPostData({ ...postData, tags: e.target.value.split(", ") })
+						setPostData(oldPostData => ({ ...oldPostData, tags: e.target.value.split(", ") }))
 					}
 				/>
 				<div className={classes.fileInput}>
@@ -110,8 +110,8 @@ const Form = ({ currentId, setCurrentId }) => {
 						type="file"
 						multiple={false}
 						onDone={({ base64 }) =>
-							// how to update only 1 property in a state that is an object
-							setPostData({ ...postData, selectedFile: base64 })
+							/* how to update only 1 property in a state that is an object */
+							setPostData(oldPostData => ({ ...oldPostData, selectedFile: base64 }))
 						}
 					/>
 				</div>

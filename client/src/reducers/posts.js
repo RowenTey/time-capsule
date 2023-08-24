@@ -53,7 +53,7 @@ export default (state = { isLoading: false, posts: [] }, action) => {
 			return {
 				...state,
 				posts: state.posts.map((post) => {
-					// return other post normally but change the post that just received a comment
+					/* return other post normally but change the post that just received a comment */
 					if (post._id === action.payload._id) return action.payload;
 
 					return post;

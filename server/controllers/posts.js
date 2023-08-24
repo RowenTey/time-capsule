@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 
-// REST API functions for /posts route
 export const getPost = async (req, res) => {
 	const { id } = req.params;
 
@@ -38,7 +37,7 @@ export const getPosts = async (req, res) => {
 			numberOfPages: Math.ceil(total / LIMIT),
 		});
 	} catch (error) {
-		res.status(404).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
 };
 
@@ -46,29 +45,25 @@ export const getPosts = async (req, res) => {
 	query -> /posts?page=1 ->  page = 1
 	params -> /posts/123 -> id = 123 
 */
-
 export const getPostsBySearch = async (req, res) => {
 	const { searchQuery, tags } = req.query;
 
 	try {
-		const title = new RegExp(searchQuery, "i"); // "i" makes it case insensitive
+		/* "i" makes it case insensitive */
+		const title = new RegExp(searchQuery, "i"); 
 
 		const posts = await PostMessage.find({
 			$or: [{ title }, { tags: { $in: tags.split(",") } }],
 		});
 
 		console.log("getPostsBySearch", posts);
-		res.json(posts);
+		res.status(200).json(posts);
 	} catch (error) {
-		res.status(404).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
 };
 
 export const createPost = async (req, res) => {
-	// check if user is logged in
-	if (!req.userId)
-		return res.json({ message: "You must be logged in to view this post" });
-
 	const post = req.body;
 
 	const newPost = new PostMessage({
@@ -82,7 +77,7 @@ export const createPost = async (req, res) => {
 		const total = await PostMessage.countDocuments({});
 		res.status(201).json({ data: newPost, totalPosts: total });
 	} catch (error) {
-		res.status(409).json({ message: error.message });
+		res.status(500).json({ message: error.message });
 	}
 };
 
@@ -91,7 +86,7 @@ export const updatePost = async (req, res) => {
 	const post = req.body;
 
 	if (!mongoose.Types.ObjectId.isValid(_id))
-		return res.status(404).send("No post with that id");
+		return res.status(404).json({ message: `No post with id ${_id}` });
 
 	const updatedPost = await PostMessage.findByIdAndUpdate(
 		_id,
@@ -99,7 +94,7 @@ export const updatePost = async (req, res) => {
 		{ new: true }
 	);
 
-	res.json(updatedPost);
+	res.status(200).json(updatedPost);
 };
 
 export const deletePost = async (req, res) => {
@@ -110,15 +105,11 @@ export const deletePost = async (req, res) => {
 
 	await PostMessage.findByIdAndRemove(_id);
 
-	res.json({ message: "Post deleted successfully" });
+	res.status(200).json({ message: "Post deleted successfully" });
 };
 
 export const likePost = async (req, res) => {
 	const { id: _id } = req.params;
-
-	// check if user is logged in
-	if (!req.userId)
-		return res.json({ message: "You must be logged in to view this post" });
 
 	if (!mongoose.Types.ObjectId.isValid(_id))
 		return res.status(404).send("No post with that id");
@@ -141,7 +132,7 @@ export const likePost = async (req, res) => {
 		new: true,
 	});
 
-	res.json(updatedPost);
+	res.status(200).json(updatedPost);
 };
 
 export const commentPost = async (req, res) => {
@@ -156,5 +147,5 @@ export const commentPost = async (req, res) => {
 		new: true,
 	});
 
-	res.json(updatedPost);
+	res.status(200).json(updatedPost);
 };

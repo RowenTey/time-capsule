@@ -44,9 +44,9 @@ const Auth = () => {
 		}
 	};
 
-	// how to update specific form data
+	/* how to update specific form data */
 	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setFormData(formData => ({ ...formData, [e.target.name]: e.target.value }));
 	};
 
 	const handleShowPassword = () =>
@@ -60,7 +60,6 @@ const Auth = () => {
 	const googleSuccess = async (res) => {
 		const result = await fetchGoogleResponse(res);
 		const token = res.credential;
-		console.log("Google success result", result);
 
 		try {
 			dispatch({ type: AUTH, data: { result, token } });
